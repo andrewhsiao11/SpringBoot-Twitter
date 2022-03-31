@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in</title>
+    <!-- Bootstrap style sheets -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" href="/custom.css">
+    <!-- Bootstrap scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Custom script -->
+    <script src="/custom.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome!</h2> 
+        <form th:action="@{/login}" method="post"><br/>
+            <input type="text" id="username" name="username" th:placeholder="Username" class="form-control"/> <br/>
+            <input type="password" th:placeholder="Password" id="password" name="password" class="form-control"/> <br/>
+            <div align="center" th:if="${param.error}">
+                <h4 style="color: rgb(255, 0, 0)">Login unsuccessful.</h4>
+            </div>
+            <button class="btn btn-md btn-success btn-block" name="Submit" value="Login" type="Submit">Log in</button> 
+        </form>      
+    </div>
+</body>
+</html>
