@@ -22,6 +22,9 @@ public class TweetService {
     @Autowired
     private TweetRepository tweetRepository;
 
+    @Autowired
+    private TagRepository tagRepository;
+
     public List<Tweet> findAll() {
         List<Tweet> tweets = tweetRepository.findAllByOrderByCreatedAtDesc();
         return formatTweets(tweets);
@@ -48,8 +51,6 @@ public class TweetService {
     }
 
     // linking hashtags 
-    @Autowired
-    private TagRepository tagRepository;
 
     private void handleTags(Tweet tweet) {
         List<Tag> tags = new ArrayList<Tag>();
@@ -70,7 +71,7 @@ public class TweetService {
 
     private List<Tweet> formatTweets(List<Tweet> tweets) {
         addTagLinks(tweets);
-        shortenLinks(tweets);
+        // shortenLinks(tweets);
         return tweets;
     }
 
@@ -91,23 +92,23 @@ public class TweetService {
         }
     }
 
-    private void shortenLinks(List<Tweet> tweets) {
-        Pattern pattern = Pattern.compile("https?[^ ]+");
-        for (Tweet tweet : tweets) {
-            String message = tweet.getMessage();
-            Matcher matcher = pattern.matcher(message);
-            while (matcher.find()) {
-                String link = matcher.group();
-                String shortenedLink = link;
-                if (link.length() > 23) {
-                    shortenedLink = link.substring(0, 20) + "...";
-                    message = message.replace(link,
-                            "<a class=\"tag\" href=\"" + link + "\" target=\"_blank\">" + shortenedLink + "</a>");
-                }
-                tweet.setMessage(message);
-            }
-        }
-    }
+    // private void shortenLinks(List<Tweet> tweets) {
+    //     Pattern pattern = Pattern.compile("https?[^ ]+");
+    //     for (Tweet tweet : tweets) {
+    //         String message = tweet.getMessage();
+    //         Matcher matcher = pattern.matcher(message);
+    //         while (matcher.find()) {
+    //             String link = matcher.group();
+    //             String shortenedLink = link;
+    //             if (link.length() > 23) {
+    //                 shortenedLink = link.substring(0, 20) + "...";
+    //                 message = message.replace(link,
+    //                         "<a class=\"tag\" href=\"" + link + "\" target=\"_blank\">" + shortenedLink + "</a>");
+    //             }
+    //             tweet.setMessage(message);
+    //         }
+    //     }
+    // }
 
 
 }
