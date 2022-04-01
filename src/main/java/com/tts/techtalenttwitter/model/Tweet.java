@@ -1,7 +1,9 @@
 package com.tts.techtalenttwitter.model;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotEmpty;
 
@@ -31,9 +35,10 @@ public class Tweet {
     @Column(name = "tweet_id")
     private Long id;
 
-    //just want to store a userid inside tweet database table as foreign key not the entire user
+    // just want to store a userid inside tweet database table as foreign key not
+    // the entire user
     // many tweets map to one user
-    @ManyToOne( fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE) // delete all tweets of user if deleted
     private User user;
@@ -44,5 +49,10 @@ public class Tweet {
 
     @CreationTimestamp
     private Date createdAt;
-    
+
+    // for hashtags
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "tweet_tag", joinColumns = @JoinColumn(name = "tweet_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private List<Tag> tags;
+
 }
