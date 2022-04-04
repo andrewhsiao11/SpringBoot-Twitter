@@ -8,6 +8,9 @@
     <div id="navbar">
       <ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
         <li><a href="/tweets">Home</a></li>
+        <li sec:authorize="isAuthenticated()">
+          <a href="../users">Users</a>
+        </li>
         <li><a href="/tweets/new">New Tweet</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
